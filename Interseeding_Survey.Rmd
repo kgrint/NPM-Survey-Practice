@@ -1,0 +1,32 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(car)
+```
+
+```{r}
+getwd()
+
+data1 = read.csv(file="InterseedingSurveyLFFRb.csv")
+str(data1)
+```
+
+```{r}
+data2 = data1 %>%
+  
+```
+
+Who took the survey?
+
+Do you Interseed and if so when?
+
+Why do you interseed?
+
+What Species do you interseed?
+
