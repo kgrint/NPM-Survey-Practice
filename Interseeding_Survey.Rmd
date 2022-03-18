@@ -16,17 +16,206 @@ getwd()
 data1 = read.csv(file="InterseedingSurveyLFFRb.csv")
 str(data1)
 ```
+# Who took the survey?
+```{r}
+Q1 = data1 %>%
+  count(I.am, sort= TRUE) %>%
+  rename("Type" = "I.am") %>%
+  mutate(Type= fct_recode(Type,
+             "Farmer" = "Farmer",
+             "Agribusiness Employee" = "Agribusiness",
+             "Agency/University Employbee" = "Agency/University")) 
+
+
+```
 
 ```{r}
-data2 = data1 %>%
+Q1_plot = Q1 %>%
+  ggplot(aes(x = Type, y = n, fill= Type, label= n)) +
+  geom_col() +
+  geom_text(nudge_y= 2) +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none") +
+  labs(title= "I am a:") +
+  coord_flip()
+
+Q1_plot
+```
+
+
+# Do you plant (recommend planting) cover crops into or after corn silage/grain? (Mark all that apply)
+```{r}
+Q2 = data1 %>%
+  count(Do.you, sort= TRUE) %>%
+  rename("Response" = "Do.you")
   
 ```
 
-Who took the survey?
+```{r}
+Q2_plot = Q2 %>%
+  ggplot(aes(x = Response, y = n, fill= Response, label= n)) +
+  geom_col() +
+  geom_text(nudge_y= 2) +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none") +
+  labs(title= "Do you plant (recommend planting) cover crops into or after corn silage/grain? (Mark all that apply)") +
+  coord_flip()
 
-Do you Interseed and if so when?
+Q2_plot
+```
 
-Why do you interseed?
 
-What Species do you interseed?
+# Why do you plant (recommend planting) cover crops into or after corn silage/grain? (Mark all that apply)
+```{r}
+Q3 = data1 %>%
+  count(Why, sort= TRUE) %>%
+  rename("Response" = "Why")
+  
+```
+
+```{r}
+Q3_plot = Q3 %>%
+  ggplot(aes(x = Response, y = n, fill= Response, label= n)) +
+  geom_col() +
+  geom_text(nudge_y= 2) +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none") +
+  labs(title= "Why do you plant (recommend planting) cover crops into or after corn silage/grain? (Mark all that apply)") +
+  coord_flip()
+
+Q3_plot
+```
+
+# Which cover crop species do you plant (recommend planting) after corn silage harvest? (Circle all that apply)
+```{r}
+Q4 = data1 %>%
+  count(Interseed, sort= TRUE) %>%
+  rename("Response" = "Interseed")
+  
+```
+
+```{r}
+Q4_plot = Q4 %>%
+  ggplot(aes(x = Response, y = n, fill= Response, label= n)) +
+  geom_col() +
+  geom_text(nudge_y= 2) +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none") +
+  labs(title= "Why do you plant (recommend planting) cover crops into or after corn silage/grain? (Mark all that apply)") +
+  coord_flip()
+
+Q4_plot
+#Doesn't work well because of many responses with combined answers
+```
+
+# Which cover crop species do you plant (recommend planting) after corn silage harvest? (Circle all that apply)
+```{r}
+Q5 = data1 %>%
+  count(After, sort= TRUE) %>%
+  rename("Response" = "After")
+  
+```
+
+```{r}
+Q5_plot = Q5 %>%
+  ggplot(aes(x = Response, y = n, fill= Response, label= n)) +
+  geom_col() +
+  geom_text(nudge_y= 2) +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none") +
+  labs(title= "Why do you plant (recommend planting) cover crops into or after corn silage/grain? (Mark all that apply)") +
+  coord_flip()
+
+Q5_plot
+#Doesn't work well because of many responses with combined answers
+```
+
+# Agree or Disagree More research is needed on early interseeding of cover crops into corn (pre-V6).
+```{r}
+Q6 = data1 %>%
+  count(Early, sort= TRUE) %>%
+  rename("Response" = "Early")
+  
+```
+
+```{r}
+Q6_plot = Q6 %>%
+  ggplot(aes(x = Response, y = n, fill= Response, label= n)) +
+  geom_col() +
+  geom_text(nudge_y= 2) +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none") +
+  labs(title= "Agree or Disagree More research is needed on early interseeding of cover crops into corn (pre-V6).") +
+  coord_flip()
+
+Q6_plot
+```
+
+# Agree or Disagree More research is needed on late interseeding of cover crops into corn (post tasseling).
+```{r}
+Q7 = data1 %>%
+  count(Late, sort= TRUE) %>%
+  rename("Response" = "Late")
+  
+```
+
+```{r}
+Q7_plot = Q7 %>%
+  ggplot(aes(x = Response, y = n, fill= Response, label= n)) +
+  geom_col() +
+  geom_text(nudge_y= 2) +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none") +
+  labs(title= "Agree or Disagree More research is needed on late interseeding of cover crops into corn (post tasseling).") +
+  coord_flip()
+
+Q7_plot
+```
+
+
+# Which method of late season interseeding, if any, should researchers focus on? (Circle all that appl
+```{r}
+Q8 = data1 %>%
+  count(Method, sort= TRUE) %>%
+  rename("Response" = "Method")
+  
+```
+
+```{r}
+Q8_plot = Q8 %>%
+  ggplot(aes(x = Response, y = n, fill= Response, label= n)) +
+  geom_col() +
+  geom_text(nudge_y= 2) +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none") +
+  labs(title= "Agree or Disagree More research is needed on late interseeding of cover crops into corn (post tasseling).") +
+  coord_flip()
+
+Q8_plot
+```
+
+#Word cloud
+```{r}
+library(ggwordcloud)
+
+wc_plot = Q3 %>%
+  ggplot(aes(label= Response, size= n, color= Response)) +
+  geom_text_wordcloud() +
+  theme_minimal()
+wc_plot
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
